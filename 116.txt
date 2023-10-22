@@ -1,0 +1,246 @@
+3
+116
+App.js
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, } from 'react-router-dom';
+import Header from './ui/Header';
+import Footer from './ui/Footer';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+
+function App() {
+  return (
+    <Router>
+      <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Header />
+        <div style={{ flex: 1 }}>
+          <Routes>
+            <Route exact path="/"  element={<Home/>} />
+            <Route exact  path="/login" element={<Login/>} />
+            <Route exact path="/register" element={<Register/>} /></Routes>
+            </div>
+           <Footer />
+           </div>
+           </Router>
+  );
+}
+
+export default App;
+
+Header.js
+// src/components/Header.js
+import React from 'react';
+import { Link } from 'react-router-dom';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+
+const Header = () => {
+  return (
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+          Inter University Sports
+        </Typography>
+        <Link to="/" style={{ color: 'white', textDecoration: 'none', marginRight: '10px' }}>
+          Home
+        </Link>
+        <Link to="/login" style={{ color: 'white', textDecoration: 'none', marginRight: '10px' }}>
+          Login
+        </Link>
+        <Link to="/register" style={{ color: 'white', textDecoration: 'none' }}>
+          Register
+        </Link>
+      </Toolbar>
+    </AppBar>
+  );
+};
+
+export default Header;
+
+Footer.js
+// src/components/Footer.js
+import React from 'react';
+import Typography from '@mui/material/Typography';
+
+const Footer = () => {
+  return (
+    <footer>
+      <Typography variant="body2" color="textSecondary" align="center">
+        © {new Date().getFullYear()} Inter University Sports
+      </Typography>
+    </footer>
+  );
+};
+
+export default Footer;
+
+Home.js
+// src/pages/Home.js
+import React from 'react';
+import Typography from '@mui/material/Typography';
+import { Paper } from '@mui/material';
+
+const Home = () => {
+  return (
+ 
+     <Paper sx={{m:12}}>
+     <Typography variant="h4" gutterBottom>
+        Welcome to Inter University Sports Competitions
+      </Typography>
+     </Paper>
+     
+  
+  );
+};
+
+export default Home;
+
+login.js
+// src/pages/Login.js
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
+
+const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Perform login logic here
+  };
+
+  return (
+    <Container maxWidth="xs">
+      
+      <form onSubmit={handleLogin}>
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Login
+        </Button>
+      </form>
+      <p>
+        Don't have an account? <Link to="/register">Register here</Link>
+      </p>
+    </Container>
+  );
+};
+
+export default Login;
+Register.js
+// src/pages/Register.js
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
+
+const Register = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    
+  };
+
+  return (
+    <Container maxWidth="xs">
+      
+        
+     
+      <form onSubmit={handleRegister}>
+        <TextField
+          label="Name"
+          variant="outlined"
+          fullWidth
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          label="Email"
+          variant="outlined"
+          fullWidth
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          margin="normal"
+        />
+        <TextField
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Register
+        </Button>
+      </form>
+      <p>
+        Already have an account? <Link to="/login">Login here</Link>
+      </p>
+    </Container>
+  );
+};
+
+export default Register;
+
+APP.JS
+
+
+import React, { useState, useEffect } from 'react';
+
+function App() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/users')
+      .then(response => response.json())
+      .then(data => setUsers(data));
+  }, []);
+
+  return (
+    <div className="App">
+      <h1>User List</h1>
+      <ul>
+        {users.map(user => (
+          <li key={user.id}>
+            <strong>Name:OM Sai Ram</strong> {user.name} 
+             <strong>Emailomsairam@gmail.com:</strong> 
+             {user.email}
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+
+
+
